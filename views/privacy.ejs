@@ -1,0 +1,80 @@
+<%- include('partials/head', { description: 'How ' + biz.name + ' collects, uses and protects your information.' }) %>
+<section class="page">
+  <div class="wrap narrow">
+    <h1>Privacy Policy</h1>
+    <p class="muted">Last updated <%= cfg.privacyUpdated %></p>
+
+    <p>This policy explains what personal information <%= biz.name %> ("we", "us") collects when you visit <%= cfg.siteUrl.replace(/^https?:\/\//, '') %>, register for our free SAT/ACT math class, enroll in our bootcamp, or use our student area, and what we do with it. We are a small tutoring business in the United States, and our services are for students preparing for the SAT and ACT and their parents or guardians.</p>
+
+    <h2>1. Who we are and how to reach us</h2>
+    <p><strong><%= biz.name %></strong><br><%= biz.address %><br>Email: <a href="mailto:<%= biz.email %>"><%= biz.email %></a><br>Phone: <%= biz.phone %></p>
+
+    <h2>2. Information we collect</h2>
+    <table>
+      <thead><tr><th>What</th><th>When and why</th></tr></thead>
+      <tbody>
+        <tr><td>Name, phone number, email address</td><td>You give these to us on the class sign-up form. We use them to register you, send your class link and reminders, and follow up about the class and the bootcamp.</td></tr>
+        <tr><td>Whether you are a parent or a student, and the class date you chose</td><td>To run the class and to tailor our follow-up.</td></tr>
+        <tr><td>Your consent choices, with the wording shown, the time, your IP address and browser type</td><td>We keep a record of what you agreed to, including any agreement to receive calls or texts, so we can show that consent was given.</td></tr>
+        <tr><td>Ad and page information (for example, the ad campaign that brought you to our site)</td><td>To learn which ads work. This comes from tags in the link you clicked.</td></tr>
+        <tr><td>Student account information: name, email, a password that we store only in scrambled (hashed) form, and messages you send to your tutor</td><td>If you enroll, to give you access to the student area and to answer your questions.</td></tr>
+        <tr><td>Payment details</td><td>Payments are handled by our payment processor. We do not see or store your full card number.</td></tr>
+        <tr><td>Cookies and similar technologies</td><td>See section 6.</td></tr>
+      </tbody>
+    </table>
+    <p>We do not knowingly collect sensitive information such as government IDs, health information or precise location. Please do not send us this information in messages.</p>
+
+    <h2>3. How we use your information</h2>
+    <ul>
+      <li>To register you for the free class and send confirmations and reminders.</li>
+      <li>To contact you about the class and the bootcamp, by email and, if you agreed, by phone call or text message.</li>
+      <li>To provide the bootcamp and the student area, and to respond to your questions.</li>
+      <li>To measure and improve our advertising and website, and to show our ads to people who may be interested, if you accept advertising cookies.</li>
+      <li>To keep the site secure, prevent fraud and spam, and comply with the law.</li>
+    </ul>
+
+    <h2>4. Calls and text messages</h2>
+    <p>We call or text you only if you check the optional box on the sign-up form agreeing to that. Consent is not a condition of registering for the class or buying anything. Message frequency varies and message and data rates may apply. You can stop texts at any time by replying STOP, and stop calls by telling us or emailing <a href="mailto:<%= biz.email %>"><%= biz.email %></a>. We do not share your phone number with third parties for their own marketing.</p>
+
+    <h2>5. Who we share information with</h2>
+    <p>We do not sell your personal information. We share it only with:</p>
+    <ul>
+      <li><strong>Service providers</strong> that help us run the business, such as website hosting, email and text-message delivery, video meetings (Zoom), and payment processing. They may use your information only to provide services to us.</li>
+      <li><strong>Meta Platforms, Inc.</strong> (Facebook and Instagram), if you accept advertising cookies: see sections 6 and 7.</li>
+      <li><strong>Authorities and advisers</strong> when the law requires it, or to protect our rights, our students or others, and professional advisers such as accountants and attorneys.</li>
+      <li>A buyer or successor if our business is sold, with notice to you.</li>
+    </ul>
+
+    <h2 id="cookies">6. Cookies and the Meta Pixel</h2>
+    <p>We use a small number of cookies:</p>
+    <ul>
+      <li><strong>Necessary cookies.</strong> A cookie that remembers your cookie choice, and, if you log in to the student area, a secure session cookie that keeps you logged in. These are needed for the site to work.</li>
+      <li><strong>Advertising and measurement cookies (optional).</strong> If you click Accept on our cookie banner, we load the Meta Pixel, a tool from Meta that records visits and actions on our site, such as completing the sign-up form. If you click Decline, the Meta Pixel is not loaded. You can change your choice at any time by clearing your browser cookies for this site and choosing again.</li>
+    </ul>
+
+    <h2>7. Advertising</h2>
+    <p>We advertise on Facebook and Instagram. When you accept advertising cookies, Meta receives information about your visit to our site and may use it to measure our ads, to show ads to you and to people with similar interests, and for its own purposes under its own privacy policy. This may count as "sharing" personal information for advertising under some state privacy laws. You can opt out by declining cookies, by using the browser settings and the Ad preferences in your Meta account, or by contacting us. We do not send your phone number or email address to Meta unless the law allows and you have agreed.</p>
+
+    <h2>8. How long we keep information</h2>
+    <p>We keep information only as long as we need it for the purposes above and to meet legal obligations. We generally delete class registration information within 24 months after your last interaction with us, and delete student accounts and messages within 24 months after your bootcamp ends, unless you ask us to remove them sooner. We may keep records of your consent choices and opt-out requests for longer, so that we can honor them and prove compliance.</p>
+
+    <h2>9. Security</h2>
+    <p>We use HTTPS encryption, store passwords only in hashed form, limit who can access the information, and back up our data. No method of transmission or storage is completely secure, so we cannot promise absolute security. If we learn of a breach affecting your information, we will notify you as the law requires.</p>
+
+    <h2>10. Your choices and rights</h2>
+    <p>You can ask us to tell you what information we hold about you, correct it, delete it, or stop using it for marketing. Depending on where you live (for example, California and other states with privacy laws), you may also have the right to know what we collect and share, to opt out of sharing for advertising, and not to be treated unfairly for using your rights. To make a request, see our <a href="/data-deletion">data deletion and privacy requests</a> page or email <a href="mailto:<%= biz.email %>"><%= biz.email %></a>. We may need to verify your identity, and you may use an authorized agent. You can also unsubscribe using the link in any marketing email.</p>
+
+    <h2>11. Children and students</h2>
+    <p>Our marketing is directed at parents, guardians and students aged 18 and older. Our classes serve high-school students, and students under 18 must be signed up by a parent or guardian, who confirms this on the sign-up form. We do not knowingly collect personal information directly from children under 13. If you believe a child under 13 has given us information, contact us and we will delete it.</p>
+
+    <h2>12. Links to other sites</h2>
+    <p>Our site may link to other sites, such as Zoom or our payment page. They have their own privacy policies, and we are not responsible for them.</p>
+
+    <h2>13. Changes to this policy</h2>
+    <p>We may update this policy. We will post the new version here with a new "last updated" date, and if a change is significant we will tell you by email.</p>
+
+    <h2>14. Contact</h2>
+    <p>Questions about this policy? Email <a href="mailto:<%= biz.email %>"><%= biz.email %></a> or write to <%= biz.name %>, <%= biz.address %>.</p>
+  </div>
+</section>
+<%- include('partials/foot') %>
