@@ -1,0 +1,13 @@
+<%- include('partials/head') %>
+<section class="page">
+  <div class="wrap narrow">
+    <h1>Contact us</h1>
+    <p>Questions about the free class, the bootcamp, or your information? We reply within two business days.</p>
+    <div class="card">
+      <p><strong><%= biz.name %></strong><br><%= biz.address %></p>
+      <p>Email: <a href="mailto:<%= biz.email %>"><%= biz.email %></a><br>Phone: <a href="tel:<%= biz.phone.replace(/[^0-9+]/g, '') %>"><%= biz.phone %></a></p>
+      <p class="small muted" style="margin:0">To stop calls or texts, reply STOP to any text message or email us.</p>
+    </div>
+  </div>
+</section>
+<%- include('partials/foot') %>

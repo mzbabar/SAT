@@ -1,0 +1,21 @@
+<%- include('partials/head') %>
+<section class="page">
+  <div class="wrap narrow">
+    <h1>Refund Policy</h1>
+    <p class="muted">Last updated <%= cfg.privacyUpdated %></p>
+    <h2>Free class</h2>
+    <p>The one-hour class is free. There is nothing to refund and no obligation to buy anything.</p>
+    <h2>SAT/ACT Math Bootcamp ($<%= cfg.bootcamp.price %> per student)</h2>
+    <ul>
+      <li><strong>Full refund before the end of the Saturday session.</strong> If you decide the bootcamp is not right for you, tell us by email or reply to your enrollment email before the Saturday session ends and we will refund your payment in full.</li>
+      <li><strong>If we cancel or reschedule.</strong> If a bootcamp does not run or we must change the date, you can move to the next available date or receive a full refund.</li>
+      <li><strong>After the Saturday session.</strong> We do not offer refunds once the Saturday session has ended, except where required by law.</li>
+      <li><strong>How refunds are paid.</strong> Refunds go back to the original payment method and usually appear within 5 to 10 business days, depending on your bank.</li>
+    </ul>
+    <h2>No score guarantee</h2>
+    <p>We do not guarantee any SAT or ACT score or score increase. Results depend on each student's effort, starting point and test-day performance.</p>
+    <h2>Contact</h2>
+    <p>Email <a href="mailto:<%= biz.email %>"><%= biz.email %></a> or call <%= biz.phone %>.</p>
+  </div>
+</section>
+<%- include('partials/foot') %>

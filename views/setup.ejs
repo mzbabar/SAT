@@ -1,0 +1,17 @@
+<%- include('partials/head', { noindex: true }) %>
+<div class="auth">
+  <div class="card">
+    <h1 style="font-size:1.6rem">Create your password</h1>
+    <p class="muted">Hi <%= student.name.split(' ')[0] %>. Choose a password to open your student area. Use at least 10 characters.</p>
+    <% if (error) { %><div class="alert alert-error" role="alert"><%= error %></div><% } %>
+    <form method="post" action="/setup/<%= token %>" data-once>
+      <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+      <label for="password">New password</label>
+      <input type="password" id="password" name="password" autocomplete="new-password" minlength="10" required>
+      <label for="password2">Repeat password</label>
+      <input type="password" id="password2" name="password2" autocomplete="new-password" minlength="10" required>
+      <button type="submit" class="btn btn-primary btn-block" style="margin-top:20px">Save password</button>
+    </form>
+  </div>
+</div>
+<%- include('partials/foot') %>

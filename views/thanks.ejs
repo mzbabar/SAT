@@ -1,0 +1,33 @@
+<%- include('partials/head') %>
+<section class="page">
+  <div class="wrap narrow">
+    <div class="card" style="padding:32px">
+      <span class="eyebrow" style="background:#e6f5ee;color:#17734f;border-color:#b8e0cb">You're registered</span>
+      <h1>You're in. See you in class.</h1>
+      <% if (cls) { %>
+        <p class="lead" style="color:var(--muted)">Your free SAT/ACT math class is on <strong><%= cls.label %></strong> and lasts 60 minutes.</p>
+        <% if (cls.zoom_url) { %>
+          <p><a class="btn btn-primary" href="<%= cls.zoom_url %>" rel="noopener">Open my Zoom link</a></p>
+          <p class="small muted">Save this page or add the class to your calendar so you can find the link on the day.</p>
+        <% } else { %>
+          <p>Your Zoom link will be emailed to you before class.</p>
+        <% } %>
+        <p><a class="btn btn-ghost" href="/class/<%= cls.id %>.ics">Add to my calendar</a></p>
+      <% } else { %>
+        <p class="lead" style="color:var(--muted)">Thanks for signing up. We are scheduling the next free class and will email you as soon as it is open.</p>
+      <% } %>
+      <h3 style="margin-top:28px">To get the most from the hour</h3>
+      <ul>
+        <li>Join from a computer or tablet with Zoom installed.</li>
+        <li>Have pencil and paper ready.</li>
+        <li>Bring one or two math problems you find hard.</li>
+      </ul>
+      <% if (mailEnabled) { %>
+        <p class="small muted">Check your email for your confirmation. If it does not arrive within a few minutes, check your spam folder or contact <a href="mailto:<%= biz.email %>"><%= biz.email %></a>.</p>
+      <% } else { %>
+        <p class="small muted">Questions? Contact <a href="mailto:<%= biz.email %>"><%= biz.email %></a>.</p>
+      <% } %>
+    </div>
+  </div>
+</section>
+<%- include('partials/foot') %>

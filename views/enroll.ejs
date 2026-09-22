@@ -1,0 +1,48 @@
+<%- include('partials/head', { description: 'Two-day live SAT and ACT math bootcamp on Saturday and Sunday, small group, with a personal study plan.' }) %>
+<section class="page">
+  <div class="wrap narrow">
+    <span class="eyebrow" style="background:#e9efff;color:#1d43a8;border-color:#c7d6fb">Optional next step after the free class</span>
+    <h1>SAT/ACT Math Bootcamp</h1>
+    <p class="lead" style="color:var(--muted)">A small live group on Zoom, two sessions of <%= cfg.bootcamp.sessionMinutes %> minutes: one on Saturday and one on Sunday. Limited to <%= cfg.bootcamp.capacity %> students so every student gets feedback.</p>
+
+    <div class="card" style="margin:24px 0;display:grid;grid-template-columns:1fr auto;gap:20px;align-items:center">
+      <div>
+        <h3 style="margin:0">$<%= cfg.bootcamp.price %> per student</h3>
+        <p class="muted" style="margin:6px 0 0"><%= cfg.bootcamp.dates %></p>
+      </div>
+      <% if (cfg.stripeLink) { %>
+        <a class="btn btn-accent" href="<%= cfg.stripeLink %>" rel="noopener">Enroll now</a>
+      <% } else { %>
+        <a class="btn btn-accent" href="mailto:<%= biz.email %>?subject=Bootcamp%20enrollment">Email to enroll</a>
+      <% } %>
+    </div>
+
+    <h2>What you get</h2>
+    <ul>
+      <li>Two live sessions on Zoom, <%= cfg.bootcamp.sessionMinutes %> minutes each, on Saturday and Sunday</li>
+      <li>A strategy playbook and a formula and common-mistakes sheet</li>
+      <li>Practice sets by question type, with worked explanations</li>
+      <li>A written 4-week study plan built from your own mistakes</li>
+      <li>A login to the student area for materials and to send questions to your tutor</li>
+    </ul>
+
+    <h2>Schedule</h2>
+    <table>
+      <thead><tr><th>Session</th><th>Focus</th></tr></thead>
+      <tbody>
+        <tr><td>Saturday, first half</td><td>Algebra: linear equations, systems, inequalities, word problems</td></tr>
+        <tr><td>Saturday, second half</td><td>Advanced math: quadratics, functions, exponentials, calculator shortcuts</td></tr>
+        <tr><td>Sunday, first half</td><td>Data analysis, ratios and percents, geometry and trigonometry essentials</td></tr>
+        <tr><td>Sunday, second half</td><td>Timed practice module, review of errors, and your study plan</td></tr>
+      </tbody>
+    </table>
+    <p class="small muted">Each session includes a short break. Times are in <%= cfg.tzLabel %>.</p>
+
+    <h2>Our promise and our limits</h2>
+    <p>You can get a full refund if you ask before the end of the Saturday session. See the <a href="/refund-policy">Refund Policy</a>. We do not guarantee a particular score: results depend on each student's effort and starting point.</p>
+
+    <h2>Already enrolled?</h2>
+    <p><a href="/login">Log in to the student area</a></p>
+  </div>
+</section>
+<%- include('partials/foot') %>

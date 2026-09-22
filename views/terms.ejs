@@ -1,0 +1,49 @@
+<%- include('partials/head') %>
+<section class="page">
+  <div class="wrap narrow">
+    <h1>Terms of Service</h1>
+    <p class="muted">Last updated <%= cfg.privacyUpdated %></p>
+
+    <p>These terms apply when you use the <%= biz.name %> website, attend our free class, enroll in our bootcamp, or use the student area. By using them you agree to these terms.</p>
+
+    <h2>1. Our services</h2>
+    <p>We offer a free one-hour live online class on SAT and ACT math and an optional paid bootcamp of two live online sessions, one on Saturday and one on Sunday, of <%= cfg.bootcamp.sessionMinutes %> minutes each. Dates, times and class sizes may change, and we will tell you if they do.</p>
+
+    <h2>2. Who may sign up</h2>
+    <p>You must be 18 or older, or a parent or guardian signing up on behalf of a student. If you sign up a student under 18, you are responsible for their use of our services and agree to these terms on their behalf.</p>
+
+    <h2>3. No guarantee of results</h2>
+    <p>We work hard to help students prepare, but we do not guarantee any test score, score increase or college admission result. Results depend on each student's effort and circumstances. Any examples of past student results are individual results and do not predict yours.</p>
+
+    <h2>4. Price and payment</h2>
+    <p>The bootcamp costs $<%= cfg.bootcamp.price %> per student unless we tell you otherwise before you pay. Payment is processed by a third-party payment provider, and their terms also apply. Refunds are covered by our <a href="/refund-policy">Refund Policy</a>.</p>
+
+    <h2>5. Student area and accounts</h2>
+    <p>If we give you a student login, keep your password private and do not share your account. You are responsible for activity on your account. We may suspend accounts that are misused. Do not upload or send anything unlawful, harmful or that includes other people's private information.</p>
+
+    <h2>6. Class conduct</h2>
+    <p>Please be respectful in classes. We may remove anyone who disrupts a session. We may record sessions for enrolled students. Recordings are for students in the bootcamp only and must not be shared or posted.</p>
+
+    <h2>7. Materials and ownership</h2>
+    <p>Class materials, practice sets, playbooks and recordings belong to <%= biz.name %>. You may use them for your own or your child's test preparation. You may not copy, sell, share or post them online without our written permission.</p>
+
+    <h2>8. Trademarks</h2>
+    <p>SAT is a registered trademark of the College Board, and ACT is a registered trademark of ACT, Inc. Neither is affiliated with or endorses <%= biz.name %> or our services.</p>
+
+    <h2>9. Calls, texts and email</h2>
+    <p>We contact you as described in our <a href="/privacy">Privacy Policy</a>. You can opt out of texts by replying STOP and of marketing email using the unsubscribe link.</p>
+
+    <h2>10. Disclaimers and limits on liability</h2>
+    <p>Our services and website are provided "as is" without warranties of any kind, to the extent the law allows. To the extent the law allows, our total liability to you for any claim related to our services will not be more than the amount you paid us in the 12 months before the claim, and we are not liable for indirect or consequential losses.</p>
+
+    <h2>11. Changes</h2>
+    <p>We may update these terms and will post the new version here with a new date. Continuing to use our services after a change means you accept it.</p>
+
+    <h2>12. Governing law</h2>
+    <p>These terms are governed by the laws of the state in which <%= biz.name %> is located, without regard to conflict-of-law rules. Any dispute will be handled in the courts of that state, except where the law gives you other rights.</p>
+
+    <h2>13. Contact</h2>
+    <p>Email <a href="mailto:<%= biz.email %>"><%= biz.email %></a> or write to <%= biz.name %>, <%= biz.address %>.</p>
+  </div>
+</section>
+<%- include('partials/foot') %>

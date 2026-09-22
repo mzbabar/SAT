@@ -1,0 +1,172 @@
+<%- include('partials/head') %>
+
+<section class="hero" style="padding-bottom:72px">
+  <span class="sym" style="right:6%;top:8%;font-size:180px" aria-hidden="true">&pi;</span>
+  <span class="sym" style="left:44%;bottom:-30px;font-size:220px" aria-hidden="true">&#8721;</span>
+  <span class="sym" style="left:3%;top:52%;font-size:120px" aria-hidden="true">&radic;x</span>
+  <div class="wrap grid">
+    <div>
+      <span class="eyebrow">Free live class &middot; 60 minutes &middot; on Zoom</span>
+      <h1>Free Live SAT &amp; ACT Math Class</h1>
+      <p class="lead">One hour with a math specialist. See the question types that show up most, learn to use the built-in calculator well, and leave with a practice plan you can start the same day.</p>
+      <ul class="ticks">
+        <li>Live and interactive: bring the problems you get stuck on</li>
+        <li>Covers the math on both the digital SAT and the ACT</li>
+        <li>No cost and no credit card to register</li>
+      </ul>
+      <div class="hero-tutor">
+        <span class="avatar" aria-hidden="true"><%= biz.tutorName.split(' ').map(function (w) { return w.charAt(0); }).join('').slice(0, 2).toUpperCase() %></span>
+        <span>Taught live by <strong><%= biz.tutorName %></strong>, SAT/ACT math tutor</span>
+      </div>
+    </div>
+
+    <div class="card form-card" id="register">
+      <h2>Reserve your free seat</h2>
+      <p class="sub">Takes about 30 seconds. Your Zoom link appears on the next page<%= mailEnabled ? " and is emailed to you" : "" %>.</p>
+
+      <% if (Object.keys(errors).length) { %>
+        <div class="alert alert-error" role="alert">Please fix the highlighted fields and try again.</div>
+      <% } %>
+
+      <form method="post" action="/register" data-once novalidate>
+        <div class="hp" aria-hidden="true">
+          <label for="website">Leave this field empty</label>
+          <input type="text" id="website" name="website" tabindex="-1" autocomplete="off">
+        </div>
+        <input type="hidden" name="utm_source" value="<%= utm.utm_source %>">
+        <input type="hidden" name="utm_medium" value="<%= utm.utm_medium %>">
+        <input type="hidden" name="utm_campaign" value="<%= utm.utm_campaign %>">
+        <input type="hidden" name="utm_content" value="<%= utm.utm_content %>">
+
+        <span class="label" id="who-label" style="margin-top:0">I am signing up as</span>
+        <div class="seg" role="radiogroup" aria-labelledby="who-label">
+          <label><input type="radio" name="who" value="parent" <%= values.who !== 'student' ? 'checked' : '' %>> A parent</label>
+          <label><input type="radio" name="who" value="student" <%= values.who === 'student' ? 'checked' : '' %>> A student</label>
+        </div>
+
+        <label for="name">Full name</label>
+        <input type="text" id="name" name="name" autocomplete="name" maxlength="100" required value="<%= values.name || '' %>" class="<%= errors.name ? 'has-error' : '' %>">
+        <% if (errors.name) { %><div class="field-error"><%= errors.name %></div><% } %>
+
+        <label for="phone">Mobile phone</label>
+        <input type="tel" id="phone" name="phone" autocomplete="tel" inputmode="tel" placeholder="(555) 555-1234" required value="<%= values.phone || '' %>" class="<%= errors.phone ? 'has-error' : '' %>">
+        <% if (errors.phone) { %><div class="field-error"><%= errors.phone %></div><% } %>
+
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" autocomplete="email" maxlength="254" required value="<%= values.email || '' %>" class="<%= errors.email ? 'has-error' : '' %>">
+        <% if (errors.email) { %><div class="field-error"><%= errors.email %></div><% } %>
+
+        <% if (sessions.length) { %>
+          <label for="class_session_id">Choose your class</label>
+          <select id="class_session_id" name="class_session_id" required class="<%= errors.class_session_id ? 'has-error' : '' %>">
+            <option value="">Select a date and time</option>
+            <% sessions.forEach(function (s) { %>
+              <option value="<%= s.id %>" <%= s.full ? 'disabled' : '' %> <%= String(values.class_session_id) === String(s.id) ? 'selected' : '' %>><%= s.label %><%= s.full ? ' (full)' : '' %></option>
+            <% }) %>
+          </select>
+          <% if (errors.class_session_id) { %><div class="field-error"><%= errors.class_session_id %></div><% } %>
+        <% } else { %>
+          <p class="small muted" style="margin-top:14px">New class dates are being scheduled. Sign up and we will email you as soon as the next class is open.</p>
+        <% } %>
+
+        <label class="check" for="confirm_age">
+          <input type="checkbox" id="confirm_age" name="confirm_age" value="1" <%= values.name && !errors.confirm_age ? 'checked' : '' %>>
+          <span>I am 18 or older, or I am a parent or guardian signing up on behalf of a student.</span>
+        </label>
+        <% if (errors.confirm_age) { %><div class="field-error"><%= errors.confirm_age %></div><% } %>
+
+        <label class="check" for="agree_privacy">
+          <input type="checkbox" id="agree_privacy" name="agree_privacy" value="1" <%= values.name && !errors.agree_privacy ? 'checked' : '' %>>
+          <span>I have read the <a href="/privacy" target="_blank" rel="noopener">Privacy Policy</a> and <a href="/terms" target="_blank" rel="noopener">Terms of Service</a>.</span>
+        </label>
+        <% if (errors.agree_privacy) { %><div class="field-error"><%= errors.agree_privacy %></div><% } %>
+
+        <label class="check" for="sms_consent">
+          <input type="checkbox" id="sms_consent" name="sms_consent" value="1" <%= values.sms_consent ? 'checked' : '' %>>
+          <span><span class="optional">(Optional)</span> <%= smsConsentText %></span>
+        </label>
+
+        <button type="submit" class="btn btn-accent btn-block" style="margin-top:18px">Reserve My Free Seat</button>
+        <p class="fine">We never sell your information. Your email is used to send your class details either way.</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<section id="learn">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>What you will do in the hour</h2>
+      <p>A real lesson, not a sales presentation. You will work problems live and take home tools you can use right away.</p>
+    </div>
+    <div class="cards">
+      <div class="card feature"><div class="num">1</div><h3>Spot the question types</h3><p>See the kinds of algebra, functions, data and geometry questions that appear most, and the traps built into them.</p></div>
+      <div class="card feature"><div class="num">2</div><h3>Work faster with the calculator</h3><p>The digital SAT includes a built-in graphing calculator. Learn ways to use it to check and solve problems in seconds.</p></div>
+      <div class="card feature"><div class="num">3</div><h3>Leave with a plan</h3><p>Get a simple, step-by-step practice plan for the weeks before your test date, based on what you saw in class.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="section-alt" id="how">
+  <div class="wrap">
+    <div class="section-head"><h2>How it works</h2></div>
+    <div class="steps">
+      <div class="card step"><div class="n">Step 1</div><h3>Reserve a seat</h3><p>Pick a date and enter your name, phone and email. You will get your Zoom link right away.</p></div>
+      <div class="card step"><div class="n">Step 2</div><h3>Join the live class</h3><p>Log in from a computer or tablet with pencil and paper. Ask questions in the chat as we go.</p></div>
+      <div class="card step"><div class="n">Step 3</div><h3>Decide what is next</h3><p>At the end you will hear about an optional two-day bootcamp. There is no obligation to buy anything.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="tutor">
+  <div class="wrap narrow">
+    <div class="tutor">
+      <div class="avatar" aria-hidden="true"><%= biz.tutorName.split(' ').map(function (w) { return w.charAt(0); }).join('').slice(0, 2).toUpperCase() %></div>
+      <div>
+        <h2>Meet your tutor</h2>
+        <p><strong><%= biz.tutorName %></strong></p>
+        <p class="muted"><%= biz.tutorBio %></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section-alt" id="bootcamp">
+  <div class="wrap">
+    <div class="callout">
+      <div>
+        <h2>Want more after the free class?</h2>
+        <p>The optional SAT/ACT Math Bootcamp is a small live group on Saturday and Sunday, <%= cfg.bootcamp.sessionMinutes %> minutes each day, limited to <%= cfg.bootcamp.capacity %> students. You get practice sets, a strategy playbook, a personal study plan and access to the student area.</p>
+        <a class="btn btn-accent" href="/enroll">See bootcamp details</a>
+      </div>
+      <div class="center">
+        <div class="price">$<%= cfg.bootcamp.price %></div>
+        <div>per student</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="faq">
+  <div class="wrap narrow">
+    <div class="section-head"><h2>Questions</h2></div>
+    <details><summary>Is the class really free?</summary><p>Yes. The one-hour class costs nothing and does not require a credit card. At the end we will tell you about a paid bootcamp, and you can choose not to sign up.</p></details>
+    <details><summary>Who is it for?</summary><p>Students in grades 9 to 12 preparing for the SAT or ACT, and their parents. The math content overlaps heavily between the two tests.</p></details>
+    <details><summary>What do I need to join?</summary><p>A computer or tablet with internet and Zoom, plus pencil and paper. Bring a question or two if you have them.</p></details>
+    <details><summary>Will you contact me?</summary><p>You will get an email confirmation and reminders. We only call or text if you check the optional box on the form, and you can stop at any time by replying STOP or emailing us.</p></details>
+    <details><summary>What happens to my information?</summary><p>We use it to run the class and follow up about it. We do not sell it. Read the full <a href="/privacy">Privacy Policy</a>.</p></details>
+    <details><summary>Will my score go up?</summary><p>We cannot promise a particular score, and no honest tutor can. The class gives you strategies and a practice plan; results depend on the work a student puts in.</p></details>
+  </div>
+</section>
+
+<section class="final-cta">
+  <div class="wrap">
+    <h2>Ready to try one free hour?</h2>
+    <p>Reserve your seat in about 30 seconds.</p>
+    <a class="btn btn-accent" href="#register">Reserve My Free Seat</a>
+  </div>
+</section>
+
+<div class="mobile-cta" id="mobile-cta"><a class="btn btn-accent btn-block" href="#register">Reserve My Free Seat</a></div>
+
+<%- include('partials/foot') %>
