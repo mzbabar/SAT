@@ -1,0 +1,43 @@
+</main>
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="cols">
+      <div>
+        <h4><%= biz.name %></h4>
+        <p><%= biz.address %><br>
+        <a href="mailto:<%= biz.email %>"><%= biz.email %></a><br>
+        <a href="tel:<%= biz.phone.replace(/[^0-9+]/g, '') %>"><%= biz.phone %></a></p>
+      </div>
+      <div>
+        <h4>Links</h4>
+        <ul>
+          <li><a href="/#register">Free class sign-up</a></li>
+          <li><a href="/enroll">Bootcamp</a></li>
+          <li><a href="/login">Student login</a></li>
+          <li><a href="/contact">Contact us</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Policies</h4>
+        <ul>
+          <li><a href="/privacy">Privacy Policy</a></li>
+          <li><a href="/terms">Terms of Service</a></li>
+          <li><a href="/refund-policy">Refund Policy</a></li>
+          <li><a href="/data-deletion">Data deletion and privacy requests</a></li>
+        </ul>
+      </div>
+    </div>
+    <p class="legal">&copy; <%= new Date().getFullYear() %> <%= biz.name %>. SAT is a registered trademark of the College Board, which is not affiliated with and does not endorse this class or website. ACT is a registered trademark of ACT, Inc., which is not affiliated with and does not endorse this class or website. We do not guarantee any particular test score; results vary by student.</p>
+  </div>
+</footer>
+
+<div class="cookie" id="cookie-banner" role="dialog" aria-label="Cookie preferences" hidden>
+  <p>We use cookies to keep the site working and, if you agree, to measure our ads with the Meta Pixel. Declining does not affect your class registration. See our <a href="/privacy#cookies">Privacy Policy</a>.</p>
+  <div class="actions">
+    <button type="button" class="btn btn-ghost btn-sm" id="cookie-decline">Decline</button>
+    <button type="button" class="btn btn-primary btn-sm" id="cookie-accept">Accept</button>
+  </div>
+</div>
+<script src="/js/app.js" defer></script>
+</body>
+</html>

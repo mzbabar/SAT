@@ -1,0 +1,17 @@
+<nav class="app-nav" aria-label="Account">
+  <div class="wrap">
+    <% if (user.role === 'admin') { %>
+      <a href="/admin" class="<%= path === '/admin' || path === '/admin/' ? 'on' : '' %>">Dashboard</a>
+      <a href="/admin/leads" class="<%= path.indexOf('/admin/leads') === 0 ? 'on' : '' %>">Leads</a>
+      <a href="/admin/sessions" class="<%= path.indexOf('/admin/sessions') === 0 ? 'on' : '' %>">Class dates</a>
+      <a href="/admin/students" class="<%= path.indexOf('/admin/students') === 0 ? 'on' : '' %>">Students</a>
+      <a href="/admin/messages" class="<%= path.indexOf('/admin/messages') === 0 ? 'on' : '' %>">Messages</a>
+      <a href="/admin/content" class="<%= path.indexOf('/admin/content') === 0 ? 'on' : '' %>">Student area content</a>
+      <a href="/portal/account">Password</a>
+    <% } else { %>
+      <a href="/portal" class="on">Student area</a>
+      <a href="/portal/account">Password</a>
+    <% } %>
+    <form method="post" action="/logout"><input type="hidden" name="_csrf" value="<%= csrfToken %>"><button class="btn btn-ghost btn-sm" type="submit">Log out (<%= user.name.split(' ')[0] %>)</button></form>
+  </div>
+</nav>
