@@ -1,0 +1,58 @@
+<%- include('../partials/head', { noindex: true }) %>
+<%- include('../partials/app-nav') %>
+<div class="app">
+  <div class="wrap">
+    <h1 style="font-size:2rem">Welcome, <%= user.name.split(' ')[0] %></h1>
+    <p class="muted">Your materials, updates from your tutor, and a private way to send questions.</p>
+
+    <div class="grid-2">
+      <div>
+        <h2 style="font-size:1.35rem">Announcements</h2>
+        <% if (!announcements.length) { %><p class="muted">Nothing posted yet. Check back before your session.</p><% } %>
+        <% announcements.forEach(function (a) { %>
+          <div class="msg"><strong><%= a.title %></strong> <span class="muted small">&middot; <%= util.formatDate(a.created_at) %></span>
+            <div style="white-space:pre-line;margin-top:6px"><%= a.body %></div></div>
+        <% }) %>
+
+        <h2 style="font-size:1.35rem;margin-top:32px">Materials and links</h2>
+        <% if (!materials.length) { %><p class="muted">Materials will appear here.</p><% } else { %>
+          <ul class="list card" style="padding:8px 20px">
+            <% materials.forEach(function (m) { %>
+              <li><a href="<%= m.url %>" target="_blank" rel="noopener noreferrer"><strong><%= m.title %></strong></a>
+                <% if (m.description) { %><div class="muted small"><%= m.description %></div><% } %></li>
+            <% }) %>
+          </ul>
+        <% } %>
+      </div>
+
+      <div id="messages">
+        <div class="card">
+          <h2 style="font-size:1.25rem">Share with your tutor</h2>
+          <p class="muted small">Send questions, your target score, or a practice-test result. Only you and your tutor can see this.</p>
+          <form method="post" action="/portal/messages" data-once>
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+            <label for="subject">Subject</label>
+            <input type="text" id="subject" name="subject" maxlength="150" required value="<%= values.subject || '' %>">
+            <% if (errors.subject) { %><div class="field-error"><%= errors.subject %></div><% } %>
+            <label for="body">Message</label>
+            <textarea id="body" name="body" maxlength="4000" required><%= values.body || '' %></textarea>
+            <% if (errors.body) { %><div class="field-error"><%= errors.body %></div><% } %>
+            <button class="btn btn-primary" type="submit" style="margin-top:14px">Send</button>
+          </form>
+        </div>
+
+        <% if (messages.length) { %>
+          <h3 style="margin-top:24px">Your messages</h3>
+          <% messages.forEach(function (m) { %>
+            <div class="msg">
+              <strong><%= m.subject %></strong> <span class="muted small">&middot; <%= util.formatDateTime(m.created_at) %></span>
+              <div style="white-space:pre-line;margin-top:6px"><%= m.body %></div>
+              <% if (m.reply) { %><div class="reply"><strong>Reply</strong> <span class="muted small">&middot; <%= util.formatDateTime(m.replied_at) %></span><div style="white-space:pre-line"><%= m.reply %></div></div><% } %>
+            </div>
+          <% }) %>
+        <% } %>
+      </div>
+    </div>
+  </div>
+</div>
+<%- include('../partials/foot') %>
