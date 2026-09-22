@@ -1,0 +1,61 @@
+<%- include('../partials/head', { noindex: true }) %>
+<%- include('../partials/app-nav') %>
+<div class="app">
+  <div class="wrap">
+    <h1 style="font-size:2rem">Leads</h1>
+    <form class="toolbar" method="get" action="/admin/leads">
+      <div><label for="q" style="margin-top:0">Search</label><input type="search" id="q" name="q" value="<%= q %>" placeholder="Name, email or phone"></div>
+      <div><label for="status" style="margin-top:0">Status</label>
+        <select id="status" name="status"><option value="">All</option>
+          <% STATUSES.forEach(function (s) { %><option value="<%= s %>" <%= s === status ? 'selected' : '' %>><%= s.replace('_', ' ') %></option><% }) %>
+        </select></div>
+      <button class="btn btn-primary btn-sm" type="submit">Filter</button>
+      <a class="btn btn-ghost btn-sm" href="/admin/leads.csv?status=<%= status %>&q=<%= encodeURIComponent(q) %>">Download CSV</a>
+    </form>
+    <p class="muted small"><%= leads.length %> lead<%= leads.length === 1 ? '' : 's' %>. "Text OK" means the person checked the box agreeing to calls and texts. Only call or text people marked Text OK.</p>
+    <div class="table-wrap">
+      <table class="t">
+        <thead><tr><th>When</th><th>Name</th><th>Contact</th><th>Class</th><th>Text OK</th><th>Status</th><th>Notes</th><th>Actions</th></tr></thead>
+        <tbody>
+          <% if (!leads.length) { %><tr><td colspan="8" class="muted">No leads match.</td></tr><% } %>
+          <% leads.forEach(function (l) { %>
+            <tr>
+              <td><%= util.formatDateTime(l.created_at) %></td>
+              <td><strong><%= l.name %></strong><br><span class="muted small"><%= l.who %></span></td>
+              <td><%= l.phone %><br><a href="mailto:<%= l.email %>"><%= l.email %></a></td>
+              <td><%= l.starts_at ? util.formatSession(l.starts_at) : 'Waitlist' %></td>
+              <td><%= l.sms_consent ? 'Yes' : 'No' %></td>
+              <td>
+                <form method="post" action="/admin/leads/<%= l.id %>/status">
+                  <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                  <input type="hidden" name="back" value="/admin/leads">
+                  <select name="status" data-autosubmit aria-label="Status for <%= l.name %>">
+                    <% STATUSES.forEach(function (s) { %><option value="<%= s %>" <%= s === l.status ? 'selected' : '' %>><%= s.replace('_', ' ') %></option><% }) %>
+                  </select>
+                  <noscript><button class="btn btn-sm btn-ghost" type="submit">Save</button></noscript>
+                </form>
+              </td>
+              <td>
+                <form method="post" action="/admin/leads/<%= l.id %>/notes">
+                  <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                  <input type="text" name="notes" value="<%= l.notes %>" maxlength="1000" aria-label="Notes for <%= l.name %>" style="min-width:140px">
+                </form>
+              </td>
+              <td style="white-space:nowrap">
+                <form class="inline" method="post" action="/admin/leads/<%= l.id %>/invite">
+                  <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                  <button class="btn btn-primary btn-sm" type="submit"><%= l.student_id ? 'New login link' : 'Enroll + login' %></button>
+                </form>
+                <form class="inline" method="post" action="/admin/leads/<%= l.id %>/delete" data-confirm="Delete this lead permanently?">
+                  <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                  <button class="btn btn-ghost btn-sm" type="submit">Delete</button>
+                </form>
+              </td>
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<%- include('../partials/foot') %>

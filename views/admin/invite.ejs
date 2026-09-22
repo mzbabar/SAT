@@ -1,0 +1,17 @@
+<%- include('../partials/head', { noindex: true }) %>
+<%- include('../partials/app-nav') %>
+<div class="app">
+  <div class="wrap narrow">
+    <h1 style="font-size:1.8rem">Login link for <%= studentName %></h1>
+    <% if (emailed) { %>
+      <div class="alert alert-ok">This link was emailed to <%= email %>.</div>
+    <% } else { %>
+      <p class="muted">Email is not set up, so send this link to <strong><%= email %></strong> yourself (email or text).</p>
+    <% } %>
+    <div class="link-box" id="invite-link"><%= link %></div>
+    <p style="margin-top:12px"><button class="btn btn-primary btn-sm" type="button" data-copy="invite-link">Copy link</button></p>
+    <p class="small muted">The link works once and expires in <%= days %> days. It is shown only on this page, so copy it now. You can create a new one from the Students page.</p>
+    <p><a href="/admin/leads">Back to leads</a> &middot; <a href="/admin/students">Students</a></p>
+  </div>
+</div>
+<%- include('../partials/foot') %>

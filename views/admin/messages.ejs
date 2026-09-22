@@ -1,0 +1,23 @@
+<%- include('../partials/head', { noindex: true }) %>
+<%- include('../partials/app-nav') %>
+<div class="app">
+  <div class="wrap narrow">
+    <h1 style="font-size:2rem">Student messages</h1>
+    <% if (!messages.length) { %><p class="muted">No messages yet.</p><% } %>
+    <% messages.forEach(function (m) { %>
+      <div class="msg">
+        <strong><%= m.subject %></strong> <span class="muted small">&middot; <%= m.name %> (<%= m.email %>) &middot; <%= util.formatDateTime(m.created_at) %></span>
+        <div style="white-space:pre-line;margin:8px 0"><%= m.body %></div>
+        <% if (m.reply) { %>
+          <div class="reply"><strong>Your reply</strong> <span class="muted small">&middot; <%= util.formatDateTime(m.replied_at) %></span><div style="white-space:pre-line"><%= m.reply %></div></div>
+        <% } %>
+        <form method="post" action="/admin/messages/<%= m.id %>/reply" style="margin-top:10px">
+          <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+          <textarea name="reply" maxlength="4000" style="min-height:70px" aria-label="Reply to <%= m.name %>" placeholder="<%= m.reply ? 'Update your reply' : 'Write a reply' %>"></textarea>
+          <button class="btn btn-primary btn-sm" type="submit" style="margin-top:8px"><%= m.reply ? 'Update reply' : 'Send reply' %></button>
+        </form>
+      </div>
+    <% }) %>
+  </div>
+</div>
+<%- include('../partials/foot') %>

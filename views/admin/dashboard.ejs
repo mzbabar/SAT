@@ -1,0 +1,51 @@
+<%- include('../partials/head', { noindex: true }) %>
+<%- include('../partials/app-nav') %>
+<div class="app">
+  <div class="wrap">
+    <h1 style="font-size:2rem">Dashboard</h1>
+
+    <% if (missing.length) { %>
+      <div class="alert alert-warn" role="alert">
+        <strong>Before you run ads, finish these settings</strong> (in your hosting service's environment variables): <%= missing.join(', ') %>.
+        Meta reviews your website, so your business name, address, email and phone must be real and visible.
+      </div>
+    <% } %>
+
+    <div class="stats">
+      <div class="stat"><b><%= stats.week %></b><span>Registrations, last 7 days</span></div>
+      <div class="stat"><b><%= stats.leads %></b><span>Total leads</span></div>
+      <div class="stat"><b><%= stats.attended %></b><span>Attended a class</span></div>
+      <div class="stat"><b><%= stats.enrolled %></b><span>Enrolled</span></div>
+      <div class="stat"><b><%= stats.students %></b><span>Active students</span></div>
+      <div class="stat"><b><%= stats.unreplied %></b><span>Messages to answer</span></div>
+    </div>
+
+    <% if (!nextClass) { %>
+      <div class="alert alert-warn">No upcoming class date is open. <a href="/admin/sessions">Add a class date</a> so visitors can pick one on the sign-up form.</div>
+    <% } else { %>
+      <p>Next class: <strong><%= util.formatSession(nextClass.starts_at) %></strong> &middot; <a href="/admin/sessions">Manage class dates</a></p>
+    <% } %>
+
+    <h2 style="font-size:1.3rem">Latest sign-ups</h2>
+    <div class="table-wrap">
+      <table class="t">
+        <thead><tr><th>When</th><th>Name</th><th>Phone</th><th>Email</th><th>Class</th><th>Status</th></tr></thead>
+        <tbody>
+          <% if (!recent.length) { %><tr><td colspan="6" class="muted">No sign-ups yet.</td></tr><% } %>
+          <% recent.forEach(function (l) { %>
+            <tr>
+              <td><%= util.formatDateTime(l.created_at) %></td>
+              <td><%= l.name %></td>
+              <td><%= l.phone %></td>
+              <td><%= l.email %></td>
+              <td><%= l.starts_at ? util.formatSession(l.starts_at) : 'Waitlist' %></td>
+              <td><span class="badge <%= l.status %>"><%= l.status.replace('_', ' ') %></span></td>
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </div>
+    <p style="margin-top:14px"><a class="btn btn-primary btn-sm" href="/admin/leads">All leads</a> <a class="btn btn-ghost btn-sm" href="/admin/leads.csv">Download CSV</a></p>
+  </div>
+</div>
+<%- include('../partials/foot') %>

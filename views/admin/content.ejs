@@ -1,0 +1,45 @@
+<%- include('../partials/head', { noindex: true }) %>
+<%- include('../partials/app-nav') %>
+<div class="app">
+  <div class="wrap">
+    <h1 style="font-size:2rem">Student area content</h1>
+    <p class="muted">What enrolled students see after they log in. Post your bootcamp Zoom links as materials or announcements. Link to files on Google Drive, Dropbox or similar (set sharing to anyone with the link).</p>
+    <div class="grid-2">
+      <div>
+        <h2 style="font-size:1.3rem">Materials and links</h2>
+        <form method="post" action="/admin/materials" class="card" style="margin-bottom:16px">
+          <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+          <label for="mtitle" style="margin-top:0">Title</label><input type="text" id="mtitle" name="title" maxlength="150" required>
+          <label for="murl">Link (https://...)</label><input type="url" id="murl" name="url" required>
+          <label for="mdesc">Short description <span class="optional">(optional)</span></label><input type="text" id="mdesc" name="description" maxlength="400">
+          <label for="msort">Order <span class="optional">(smaller shows first)</span></label><input type="number" id="msort" name="sort" value="0">
+          <button class="btn btn-primary btn-sm" type="submit" style="margin-top:14px">Add material</button>
+        </form>
+        <% materials.forEach(function (m) { %>
+          <div class="msg">
+            <a href="<%= m.url %>" target="_blank" rel="noopener noreferrer"><strong><%= m.title %></strong></a>
+            <% if (m.description) { %><div class="muted small"><%= m.description %></div><% } %>
+            <form method="post" action="/admin/materials/<%= m.id %>/delete" data-confirm="Remove this material?" style="margin-top:8px"><input type="hidden" name="_csrf" value="<%= csrfToken %>"><button class="btn btn-ghost btn-sm" type="submit">Remove</button></form>
+          </div>
+        <% }) %>
+      </div>
+      <div>
+        <h2 style="font-size:1.3rem">Announcements</h2>
+        <form method="post" action="/admin/announcements" class="card" style="margin-bottom:16px">
+          <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+          <label for="atitle" style="margin-top:0">Title</label><input type="text" id="atitle" name="title" maxlength="150" required>
+          <label for="abody">Message</label><textarea id="abody" name="body" maxlength="3000" required></textarea>
+          <button class="btn btn-primary btn-sm" type="submit" style="margin-top:14px">Post announcement</button>
+        </form>
+        <% announcements.forEach(function (a) { %>
+          <div class="msg">
+            <strong><%= a.title %></strong> <span class="muted small">&middot; <%= util.formatDate(a.created_at) %></span>
+            <div style="white-space:pre-line"><%= a.body %></div>
+            <form method="post" action="/admin/announcements/<%= a.id %>/delete" data-confirm="Delete this announcement?" style="margin-top:8px"><input type="hidden" name="_csrf" value="<%= csrfToken %>"><button class="btn btn-ghost btn-sm" type="submit">Delete</button></form>
+          </div>
+        <% }) %>
+      </div>
+    </div>
+  </div>
+</div>
+<%- include('../partials/foot') %>

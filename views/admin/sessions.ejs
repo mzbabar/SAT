@@ -1,0 +1,42 @@
+<%- include('../partials/head', { noindex: true }) %>
+<%- include('../partials/app-nav') %>
+<div class="app">
+  <div class="wrap">
+    <h1 style="font-size:2rem">Free class dates</h1>
+    <p class="muted">Dates you add here appear in the drop-down on the sign-up form. Times are entered in <%= cfg.timezone %> (<%= cfg.tzLabel %>).</p>
+
+    <form method="post" action="/admin/sessions" class="card" style="margin-bottom:24px">
+      <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+      <h2 style="font-size:1.2rem">Add a class date</h2>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px">
+        <div><label for="starts_at">Date and time (<%= cfg.tzLabel %>)</label><input type="datetime-local" id="starts_at" name="starts_at" required></div>
+        <div><label for="zoom_url">Zoom link</label><input type="url" id="zoom_url" name="zoom_url" placeholder="https://zoom.us/j/..."></div>
+        <div><label for="capacity">Seats</label><input type="number" id="capacity" name="capacity" value="40" min="1" max="500"></div>
+        <div><label for="title">Title</label><input type="text" id="title" name="title" value="Free SAT/ACT Math Class" maxlength="120"></div>
+      </div>
+      <button class="btn btn-primary" type="submit" style="margin-top:16px">Add class date</button>
+    </form>
+
+    <div class="table-wrap">
+      <table class="t">
+        <thead><tr><th>Date</th><th>Seats</th><th>Zoom link</th><th>Shown on site</th><th>Actions</th></tr></thead>
+        <tbody>
+          <% if (!sessions.length) { %><tr><td colspan="5" class="muted">No class dates yet.</td></tr><% } %>
+          <% sessions.forEach(function (s) { %>
+            <tr>
+              <td><strong><%= s.label %></strong><% if (s.past) { %> <span class="badge">past</span><% } %><br><span class="muted small"><%= s.title %></span></td>
+              <td><%= s.taken %> / <%= s.capacity %></td>
+              <td class="small"><%= s.zoom_url || 'Not set' %></td>
+              <td><%= s.active && !s.past ? 'Yes' : 'No' %></td>
+              <td style="white-space:nowrap">
+                <form class="inline" method="post" action="/admin/sessions/<%= s.id %>/toggle"><input type="hidden" name="_csrf" value="<%= csrfToken %>"><button class="btn btn-ghost btn-sm" type="submit"><%= s.active ? 'Hide' : 'Show' %></button></form>
+                <form class="inline" method="post" action="/admin/sessions/<%= s.id %>/delete" data-confirm="Delete this class date?"><input type="hidden" name="_csrf" value="<%= csrfToken %>"><button class="btn btn-ghost btn-sm" type="submit">Delete</button></form>
+              </td>
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<%- include('../partials/foot') %>

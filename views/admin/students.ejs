@@ -1,0 +1,31 @@
+<%- include('../partials/head', { noindex: true }) %>
+<%- include('../partials/app-nav') %>
+<div class="app">
+  <div class="wrap">
+    <h1 style="font-size:2rem">Students</h1>
+    <p class="muted">Create a student login from the Leads page with "Enroll + login". Use "New login link" here if a student forgets their password.</p>
+    <div class="table-wrap">
+      <table class="t">
+        <thead><tr><th>Name</th><th>Email</th><th>Password set</th><th>Last login</th><th>Active</th><th>Actions</th></tr></thead>
+        <tbody>
+          <% if (!students.length) { %><tr><td colspan="6" class="muted">No students yet.</td></tr><% } %>
+          <% students.forEach(function (s) { %>
+            <tr>
+              <td><strong><%= s.name %></strong></td>
+              <td><%= s.email %></td>
+              <td><%= s.password_hash ? 'Yes' : 'Not yet' %></td>
+              <td><%= s.last_login ? util.formatDateTime(s.last_login) : 'Never' %></td>
+              <td><%= s.active ? 'Yes' : 'No' %></td>
+              <td style="white-space:nowrap">
+                <form class="inline" method="post" action="/admin/students/<%= s.id %>/reset"><input type="hidden" name="_csrf" value="<%= csrfToken %>"><button class="btn btn-primary btn-sm" type="submit">New login link</button></form>
+                <form class="inline" method="post" action="/admin/students/<%= s.id %>/toggle"><input type="hidden" name="_csrf" value="<%= csrfToken %>"><button class="btn btn-ghost btn-sm" type="submit"><%= s.active ? 'Deactivate' : 'Activate' %></button></form>
+                <form class="inline" method="post" action="/admin/students/<%= s.id %>/delete" data-confirm="Delete this student and all their messages?"><input type="hidden" name="_csrf" value="<%= csrfToken %>"><button class="btn btn-ghost btn-sm" type="submit">Delete</button></form>
+              </td>
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<%- include('../partials/foot') %>
