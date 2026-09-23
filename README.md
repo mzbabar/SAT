@@ -30,26 +30,110 @@ If you need a free host for a real business, this same code runs on Render's fre
 | `/portal` | Student area: announcements, materials and links, and a private "share with your tutor" message box with replies. |
 | `/admin` | Your dashboard: leads (search, status, notes, CSV download), class dates and Zoom links, students, messages, and student-area content. |
 
-## Deploy to Vercel (about 20 minutes)
+## Deploy to Vercel, step by step (about 20 to 30 minutes)
 
-1. **Put the files on GitHub.** Create a free GitHub account, make a new **private** repository, and upload everything in this folder (on github.com choose "Add file > Upload files" and drag the folder contents in). Do not upload `node_modules` or a `.env` file.
-2. **Import into Vercel.** At vercel.com choose Add New > Project, pick the repository, and leave the settings as they are. Vercel detects Express automatically and deploys right away. That first deploy will show an error page until you finish steps 3 and 4, which is expected.
-3. **Add the database.** In the Vercel project open the **Storage** tab, choose **Create Database > Neon (Postgres)**, pick the free plan and the region closest to your students (US East works well with Vercel's default region), and connect it to the project. Vercel adds `DATABASE_URL` and `POSTGRES_URL` for you. The site creates its own tables on first visit.
-4. **Set the environment variables.** In Settings > Environment Variables add the ones from `.env.example`. The must-haves are:
-   - `SESSION_SECRET`: a long random string. Make one with `node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"` or any password generator (40+ characters).
-   - `ADMIN_EMAIL` and `ADMIN_PASSWORD` (10+ characters): your admin login. It is created the first time the site starts. Changing these variables later does not change an existing admin account; use the Password link in the top menu to change it.
-   - `SITE_URL`: your final address, for example `https://www.yourdomain.com` (until then the `.vercel.app` address works).
-   - `BUSINESS_NAME`, `TUTOR_NAME`, `TUTOR_BIO`, `CONTACT_EMAIL`, `CONTACT_PHONE`, `BUSINESS_ADDRESS`: shown on the site and in the privacy policy. Meta checks these, so use real details.
-   - Optional: `STRIPE_PAYMENT_LINK`, `META_PIXEL_ID`, `BOOTCAMP_DATES`, and the `SMTP_*` settings for confirmation emails.
-5. **Deploy** (Deployments > Redeploy, or push any change). Open `/login` and sign in with your admin email and password. The dashboard lists any settings still to fill in.
-6. **Add your first class** under Class dates, with its Zoom link.
-7. **Custom domain.** In Settings > Domains add your domain and follow the DNS steps. HTTPS is issued automatically. Then update `SITE_URL` and redeploy.
+The example values below (business name, email, password, keys) are placeholders so you can see exactly what goes where. Replace every one of them with your own before you go live — never use the example password or session secret shown here.
 
-Notes:
+### 1. Put the code on GitHub
+
+1. Go to [github.com](https://github.com) and sign up if you don't have an account.
+2. Click the **+** in the top right, then **New repository**.
+3. Name it something like `bright-path-math-site`, set visibility to **Private**, and leave "Add a README" unchecked (this folder already has one). Click **Create repository**.
+4. On the new, empty repository page, click **uploading an existing file**.
+5. Open this folder on your computer in Finder or File Explorer, select everything in it **except** the `node_modules` folder, the `data` folder (if present) and any `.env` file, and **drag that whole selection** onto the GitHub upload box. Dragging is important: this folder has subfolders inside subfolders (`views/partials`, `views/admin`, `views/portal`), and GitHub's "choose your files" link opens a picker that can only select individual files, not folders — so subfolders silently get left out if you use it. Dragging preserves the folder structure.
+6. Before committing, use the file list GitHub shows you to confirm you see `views/partials`, `views/admin`, and `views/portal` as folders, not just the files directly inside `views`. If any of those three are missing, remove what you added and drag again.
+7. Scroll down and click **Commit changes**.
+
+If you'd rather avoid this pitfall entirely, install [GitHub Desktop](https://desktop.github.com), point it at this folder, and publish the repository from there — it uploads the whole folder correctly every time, which also makes it easier to push future edits (like the policy page wording in the pre-launch checklist below).
+
+### 2. Import the project into Vercel
+
+1. Go to [vercel.com](https://vercel.com) and sign up or log in — choosing "Continue with GitHub" is easiest, since it connects your account automatically.
+2. On your Vercel dashboard, click **Add New...** in the top right, then **Project**.
+3. Under "Import Git Repository," find `bright-path-math-site` (or whatever you named it) and click **Import**.
+4. On the "Configure Project" screen:
+   - **Framework Preset**: leave it as detected (Vercel recognizes this as a Node/Express app).
+   - Expand **Build and Output Settings** and turn on the override for **Build Command**. Enter:
+     ```
+     npm run build
+     ```
+     This regenerates the bundled page templates every time you deploy, so an edited privacy policy or price change always makes it live. (The folder you uploaded already has a built copy, so the very first deploy would work either way — this just makes every deploy after that one safe too.)
+   - Leave **Output Directory** and **Install Command** as detected.
+5. Click **Deploy**. The first deployment will finish but the site will show a "settings still to fill in" or error page when you open it — that's expected, because there's no database or admin login yet. Continue to step 3.
+
+### 3. Add the database (Neon Postgres)
+
+1. Open your new project in Vercel and click the **Storage** tab.
+2. Click **Create Database**, then choose **Neon** (listed under Marketplace Database Providers) and click **Continue** or **Install**.
+3. Choose **Create New Neon Account** (unless you already have one you want to link), then **Continue**.
+4. Accept the terms, choose the **Free** plan, pick the region closest to where your students live (for example, a US region if you're advertising in the US), give the database a name (for example `bright-path-math-db`), and confirm.
+5. You'll land back on the **Storage** tab showing the new database's status and connection details.
+6. Click into the database, then **Connect Project**. Pick your Vercel project, and check all three environments: **Production**, **Preview**, and **Development**. Click **Connect**.
+
+This step is what creates `DATABASE_URL` for you — see the section below for exactly where to find it and what it looks like. You do not type or paste a database URL by hand for Neon; the integration writes it into your project's environment variables automatically.
+
+### 4. Set the environment variables
+
+Go to your project's **Settings** tab, then **Environment Variables**. `DATABASE_URL` (from step 3) is already listed here, tagged with the Neon integration. Add each of the following: type the **Key** exactly as shown, paste the **Value**, leave all three environment boxes (Production, Preview, Development) checked, and click **Add** after each one.
+
+| Key | Example value (replace with your own) | Notes |
+| --- | --- | --- |
+| `SESSION_SECRET` | `7970fd7875869ffa93aad5897ca04eab7701e5cc1321b9da0a97cbcde04c2056` | Generate your own random one — see below. Never reuse this example value. |
+| `ADMIN_EMAIL` | `owner@brightpathmath.com` | The email you'll use to log in to `/admin`. |
+| `ADMIN_PASSWORD` | `BootcampOwner-2026!` | 10+ characters. Created as the admin account the first time the site starts. |
+| `SITE_URL` | `https://bright-path-math-site.vercel.app` | Use the `.vercel.app` address Vercel gave your project for now; update this once you add a custom domain (step 7). |
+| `BUSINESS_NAME` | `Bright Path Math Tutoring` | Shown across the site and in the privacy policy. |
+| `TUTOR_NAME` | `Jordan Ellis` | |
+| `TUTOR_BIO` | `Jordan has 8 years of experience tutoring high school math and has helped more than 200 students prepare for the SAT and ACT.` | Only include claims you can back up. |
+| `CONTACT_EMAIL` | `hello@brightpathmath.com` | |
+| `CONTACT_PHONE` | `(512) 555-0142` | |
+| `BUSINESS_ADDRESS` | `482 Maple Street, Austin, TX 78701` | Meta checks that this is a real, working address before approving ads. |
+| `BOOTCAMP_DATES` | `Saturday and Sunday, November 14 and 15, 2026` | Optional; shown on the bootcamp page until you add real class dates in step 6. |
+| `STRIPE_PAYMENT_LINK` | `https://buy.stripe.com/test_00000001abcXYZ` | Optional at first; create a real one in your Stripe dashboard before you accept payments, and replace this. |
+| `META_PIXEL_ID` | `123456789012345` | Optional; from Meta Events Manager. Loads only after a visitor clicks Accept on the cookie banner. |
+
+To generate your own `SESSION_SECRET` instead of the example above, run this on your own computer (with Node installed) and copy the output:
+
+```bash
+node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
+```
+
+If you don't have Node handy, any password manager's "generate password" feature set to 40+ characters works just as well.
+
+Optional: the `SMTP_*` variables (`SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASS`, `MAIL_FROM`) turn on email confirmations. Leave them blank for now if you don't have an email-sending provider yet — the site works fine without them.
+
+#### Where DATABASE_URL comes from, and what it looks like
+
+You never fill this one in yourself when using Neon through Vercel's Storage tab (step 3) — it's set automatically. To see it: **Settings > Environment Variables**, find the row for `DATABASE_URL` (it shows a small Neon/Marketplace tag next to it), and click the eye icon to reveal the value. It will look like this (yours will have different random characters and a different region):
+
+```
+postgres://neondb_owner:AbC123xYzPqR7@ep-restless-star-12345678-pooler.us-east-2.aws.neon.tech/neondb?sslmode=require
+```
+
+If you ever use a Postgres database from somewhere other than Vercel's Neon integration (for example, a Neon account you created directly at neon.tech, or Supabase), there's no automatic step — copy that provider's connection string and add it yourself: **Settings > Environment Variables > Add New**, Key `DATABASE_URL`, Value the connection string, check Production/Preview/Development, then **Save**.
+
+### 5. Redeploy so the new settings take effect
+
+Environment variables only apply to deployments made after you add them. Go to the **Deployments** tab, find the most recent deployment, click the **⋯** menu next to it, and choose **Redeploy**.
+
+### 6. Sign in and add your first class
+
+1. Open `https://bright-path-math-site.vercel.app/login` (use your own project's address) and sign in with the `ADMIN_EMAIL` and `ADMIN_PASSWORD` you set in step 4.
+2. The dashboard lists any settings you still need to fill in.
+3. Go to **Class dates**, add your first free class with its Zoom link.
+
+### 7. Add your custom domain
+
+1. In Vercel, go to **Settings > Domains**, type your domain (for example `www.brightpathmath.com`), and follow the DNS steps it shows you (usually adding a record at wherever you bought the domain). HTTPS is issued automatically once it's connected.
+2. Go back to **Settings > Environment Variables**, edit `SITE_URL` to your real domain (`https://www.brightpathmath.com`), and redeploy (step 5) again.
+
+### Notes
 
 - **First visit after a quiet period** can take an extra second while the free Neon database wakes up (it pauses after 5 minutes of no use). Visitors just see a slightly slower first page.
 - **Free Neon limits**: 0.5 GB of storage and a monthly compute allowance, which is far more than a lead list and a few students need. Check Neon's current limits and turn on its backups or export your leads (Admin > Leads > Download CSV) regularly.
 - **Email confirmations** need an SMTP provider (Brevo, Mailgun, Gmail app password, and so on). Without one, people see the Zoom link on the thank-you page and you copy student login links by hand.
+- **If a deploy fails with "page template(s) are missing from the views folder"**, a subfolder didn't make it into your GitHub repository (see the warning in step 1). The error names exactly which files are missing; add them on GitHub and redeploy.
+- **If a page shows the right text but looks unstyled** (no colors, plain serif font, no header bar) right after a redeploy, that's almost always a visitor's browser holding onto a cached copy of an older CSS file — static files are cached for 7 days. The site now appends a version string to `/css/style.css` and `/js/app.js` automatically (based on Vercel's commit hash) so every new deploy gets a fresh, uncached URL and this should no longer happen. If you still see it, do a hard refresh (Safari: hold Option and click Reload, or use a Private window) to confirm it's a cache, not a real deploy problem.
 
 ## Run it on your computer
 
