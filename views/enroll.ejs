@@ -42,11 +42,12 @@
       <div>
         <p style="margin-bottom:2px"><strong><%= biz.tutorName %></strong></p>
         <% if (biz.tutorCredentials) { %><p class="small muted" style="margin-bottom:12px"><%= biz.tutorCredentials %></p><% } %>
-        <p class="muted"><%= biz.tutorBio %></p>
+        <% biz.tutorBio.split('\n\n').forEach(function (para) { %><p class="muted"><%= para %></p><% }) %>
         <% if (cfg.tutorRating.value) { %>
           <a href="<%= cfg.tutorRating.url %>" target="_blank" rel="noopener" class="badge" style="text-decoration:none;font-size:0.85rem;padding:6px 14px">
             &#9733; <%= cfg.tutorRating.value %>/5 from <%= cfg.tutorRating.count %> tutoring students on <%= cfg.tutorRating.source %>
           </a>
+          <p class="small muted" style="margin-top:8px"><a href="<%= cfg.tutorRating.url %>" target="_blank" rel="noopener">View full profile on <%= cfg.tutorRating.source %></a></p>
         <% } %>
       </div>
     </div>

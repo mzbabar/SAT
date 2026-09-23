@@ -16,7 +16,7 @@
       </ul>
       <div class="hero-tutor">
         <span class="avatar" aria-hidden="true"><%= biz.tutorName.split(' ').map(function (w) { return w.charAt(0); }).join('').slice(0, 2).toUpperCase() %></span>
-        <span>Taught live by <strong><%= biz.tutorName %></strong>, SAT/ACT math tutor</span>
+        <span>Taught live by <strong><%= biz.tutorName %></strong>, SAT/ACT math tutor &mdash; <a href="#tutor" style="color:inherit;text-decoration:underline">more about your tutor</a></span>
       </div>
     </div>
 
@@ -167,12 +167,12 @@
         <h2>Meet your tutor</h2>
         <p style="margin-bottom:2px"><strong><%= biz.tutorName %></strong></p>
         <% if (biz.tutorCredentials) { %><p class="small muted" style="margin-bottom:12px"><%= biz.tutorCredentials %></p><% } %>
-        <p class="muted"><%= biz.tutorBio %></p>
+        <% biz.tutorBio.split('\n\n').forEach(function (para) { %><p class="muted"><%= para %></p><% }) %>
         <% if (cfg.tutorRating.value) { %>
           <a href="<%= cfg.tutorRating.url %>" target="_blank" rel="noopener" class="badge" style="text-decoration:none;font-size:0.85rem;padding:6px 14px">
             &#9733; <%= cfg.tutorRating.value %>/5 from <%= cfg.tutorRating.count %> tutoring students on <%= cfg.tutorRating.source %>
           </a>
-          <p class="small muted" style="margin-top:8px">Background-checked &middot; over <%= cfg.tutorRating.hours %> hours of 1-on-1 tutoring</p>
+          <p class="small muted" style="margin-top:8px">Background-checked &middot; over <%= cfg.tutorRating.hours %> hours of 1-on-1 tutoring &middot; <a href="<%= cfg.tutorRating.url %>" target="_blank" rel="noopener">view full profile on <%= cfg.tutorRating.source %></a></p>
         <% } %>
       </div>
     </div>
