@@ -9,6 +9,9 @@
         <% if (cls.zoom_url) { %>
           <p><a class="btn btn-primary" href="<%= cls.zoom_url %>" rel="noopener">Open my Zoom link</a></p>
           <p class="small muted">Save this page or add the class to your calendar so you can find the link on the day.</p>
+          <p class="small muted" style="margin-top:16px">Or copy the full link:</p>
+          <div class="link-box" id="zoom-link"><%= cls.zoom_url %></div>
+          <p style="margin-top:8px"><button class="btn btn-ghost btn-sm" type="button" data-copy="zoom-link">Copy link</button></p>
         <% } else { %>
           <p>Your Zoom link will be emailed to you before class.</p>
         <% } %>
