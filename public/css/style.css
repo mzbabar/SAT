@@ -138,6 +138,28 @@ details p { margin: 10px 0 0; color: var(--muted); }
 .final-cta h2 { color: #fff; }
 .final-cta p { color: #d5dcf0; }
 
+/* Trust strip: short row of differentiators, used on light backgrounds */
+.trust-strip { background: #fff; border-bottom: 1px solid var(--border); padding: 22px 0; }
+.trust-strip ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; justify-content: center; gap: 14px 28px; }
+.trust-strip li { display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 0.92rem; color: var(--navy); }
+.trust-strip li::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--ok); flex: none; }
+
+/* Guarantee badge: small risk-reversal callout used near pricing */
+.guarantee { display: flex; align-items: flex-start; gap: 12px; background: var(--ok-bg); border: 1px solid #bfe3d1; border-radius: 12px; padding: 14px 16px; margin: 18px 0; }
+.guarantee .mark { flex: none; width: 30px; height: 30px; border-radius: 50%; background: var(--ok); color: #fff; display: grid; place-items: center; font-weight: 800; }
+.guarantee p { margin: 0; color: #12523a; font-size: 0.93rem; }
+.guarantee strong { color: var(--ok); }
+
+/* Compare list: this program vs. generic self-paced platforms */
+.compare { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.compare .card h3 { display: flex; align-items: center; gap: 8px; }
+.compare ul { list-style: none; margin: 0; padding: 0; }
+.compare li { padding: 8px 0 8px 26px; position: relative; border-bottom: 1px solid var(--border); font-size: 0.95rem; color: var(--muted); }
+.compare li:last-child { border-bottom: 0; }
+.compare .yes li::before { content: "\2713"; position: absolute; left: 0; color: var(--ok); font-weight: 800; }
+.compare .no li::before { content: "\2013"; position: absolute; left: 4px; color: #9aa4bd; font-weight: 800; }
+@media (max-width: 900px) { .compare { grid-template-columns: 1fr; } }
+
 /* Article pages (privacy, terms) */
 .page { padding: 48px 0 72px; }
 .page h1 { font-size: clamp(1.8rem, 4vw, 2.5rem); }
