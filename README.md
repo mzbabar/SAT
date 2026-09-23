@@ -1,8 +1,8 @@
 # SAT/ACT Math Free Class and Bootcamp Website (Vercel + Postgres edition)
 
-A small website for a tutor who runs Facebook and Instagram ads to a free one-hour live class and then sells a bootcamp.
+A small website for a tutor who runs Facebook and Instagram ads to a free 40-minute live class and then sells a bootcamp.
 
-**Free class:** 60 minutes, live on Zoom. **Bootcamp:** $299 per student, two live sessions of 120 minutes each (Saturday and Sunday), about 7 students or more per cohort (about $2,000), room for 15.
+**Free class:** 40 minutes, live on Zoom. **Bootcamp:** $299 per student, two live sessions of 120 minutes each (Saturday and Sunday), about 7 students or more per cohort (about $2,000), room for 15.
 
 This edition is built for serverless hosting on **Vercel**. Vercel cannot keep files between requests, so:
 
