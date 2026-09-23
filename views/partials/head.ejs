@@ -13,7 +13,7 @@
 <% if (typeof noindex !== 'undefined' && noindex) { %><meta name="robots" content="noindex, nofollow"><% } %>
 <link rel="canonical" href="<%= cfg.siteUrl %><%= path %>">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/css/style.css?v=<%= cfg.assetVersion %>">
 </head>
 <body data-pixel="<%= pixelId %>"<% if (typeof trackLead !== 'undefined' && trackLead) { %> data-track="lead"<% } %>>
 <a class="skip" href="#main">Skip to content</a>
