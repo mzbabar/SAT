@@ -17,6 +17,13 @@
       <% } %>
     </div>
 
+    <div class="guarantee">
+      <span class="mark" aria-hidden="true">&#10003;</span>
+      <p><strong>Risk-free:</strong> ask for a full refund any time before the end of Saturday's session, no questions asked. See the <a href="/refund-policy">Refund Policy</a>.</p>
+    </div>
+
+    <p class="muted small"><strong>Topics covered:</strong> linear equations and systems &middot; inequalities and word problems &middot; quadratics and other functions &middot; exponential growth &middot; ratios, rates and percents &middot; data analysis and statistics &middot; geometry and trigonometry essentials &middot; digital SAT calculator strategies &middot; timed-section pacing</p>
+
     <h2>What you get</h2>
     <ul>
       <li>Two live sessions on Zoom, <%= cfg.bootcamp.sessionMinutes %> minutes each, on Saturday and Sunday</li>
@@ -25,6 +32,24 @@
       <li>A written 4-week study plan built from your own mistakes</li>
       <li>A login to the student area for materials and to send questions to your tutor</li>
     </ul>
+
+    <h2>Why a capped, live group instead of a self-paced course</h2>
+    <p>Big platforms hand every student the same pre-recorded videos in the same order. Here, a real tutor watches the group work problems live, corrects mistakes in the moment, and builds your study plan from the errors you actually made, not a generic checklist. Capping the bootcamp at <%= cfg.bootcamp.capacity %> students is what makes that possible.</p>
+
+    <h2>Your tutor</h2>
+    <div class="tutor" style="align-items:flex-start">
+      <div class="avatar" aria-hidden="true"><%= biz.tutorName.split(' ').map(function (w) { return w.charAt(0); }).join('').slice(0, 2).toUpperCase() %></div>
+      <div>
+        <p style="margin-bottom:2px"><strong><%= biz.tutorName %></strong></p>
+        <% if (biz.tutorCredentials) { %><p class="small muted" style="margin-bottom:12px"><%= biz.tutorCredentials %></p><% } %>
+        <p class="muted"><%= biz.tutorBio %></p>
+        <% if (cfg.tutorRating.value) { %>
+          <a href="<%= cfg.tutorRating.url %>" target="_blank" rel="noopener" class="badge" style="text-decoration:none;font-size:0.85rem;padding:6px 14px">
+            &#9733; <%= cfg.tutorRating.value %>/5 from <%= cfg.tutorRating.count %> tutoring students on <%= cfg.tutorRating.source %>
+          </a>
+        <% } %>
+      </div>
+    </div>
 
     <h2>Schedule</h2>
     <table>

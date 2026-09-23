@@ -93,6 +93,18 @@
   </div>
 </section>
 
+<section class="trust-strip">
+  <div class="wrap">
+    <ul>
+      <li>Live, not pre-recorded</li>
+      <li>Real math specialist, not just an app</li>
+      <li>Bootcamp capped at <%= cfg.bootcamp.capacity %> students</li>
+      <li>Covers digital SAT and ACT math</li>
+      <li>Refund if you ask before Sunday's session</li>
+    </ul>
+  </div>
+</section>
+
 <section id="learn">
   <div class="wrap">
     <div class="section-head">
@@ -118,14 +130,50 @@
   </div>
 </section>
 
+<section>
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Why a live, small class beats a big self-paced course</h2>
+      <p>Most SAT/ACT prep is a video library you watch alone. This is a real class with a real tutor and a handful of other students.</p>
+    </div>
+    <div class="compare">
+      <div class="card">
+        <h3>A live class capped at <%= cfg.bootcamp.capacity %></h3>
+        <ul class="yes">
+          <li>A tutor sees your work and corrects mistakes in the moment</li>
+          <li>Questions get answered live, not through a support ticket</li>
+          <li>Practice is matched to what the group is actually missing</li>
+          <li>You leave with a study plan built from your own errors</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>A typical self-paced video course</h3>
+        <ul class="no">
+          <li>Pre-recorded lessons watched alone, at your own pace</li>
+          <li>No one checks whether you understood a step</li>
+          <li>The same generic lesson plan for every student</li>
+          <li>Easy to fall behind with no one to notice</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section id="tutor">
   <div class="wrap narrow">
     <div class="tutor">
       <div class="avatar" aria-hidden="true"><%= biz.tutorName.split(' ').map(function (w) { return w.charAt(0); }).join('').slice(0, 2).toUpperCase() %></div>
       <div>
         <h2>Meet your tutor</h2>
-        <p><strong><%= biz.tutorName %></strong></p>
+        <p style="margin-bottom:2px"><strong><%= biz.tutorName %></strong></p>
+        <% if (biz.tutorCredentials) { %><p class="small muted" style="margin-bottom:12px"><%= biz.tutorCredentials %></p><% } %>
         <p class="muted"><%= biz.tutorBio %></p>
+        <% if (cfg.tutorRating.value) { %>
+          <a href="<%= cfg.tutorRating.url %>" target="_blank" rel="noopener" class="badge" style="text-decoration:none;font-size:0.85rem;padding:6px 14px">
+            &#9733; <%= cfg.tutorRating.value %>/5 from <%= cfg.tutorRating.count %> tutoring students on <%= cfg.tutorRating.source %>
+          </a>
+          <p class="small muted" style="margin-top:8px">Background-checked &middot; over <%= cfg.tutorRating.hours %> hours of 1-on-1 tutoring</p>
+        <% } %>
       </div>
     </div>
   </div>
@@ -137,6 +185,10 @@
       <div>
         <h2>Want more after the free class?</h2>
         <p>The optional SAT/ACT Math Bootcamp is a small live group on Saturday and Sunday, <%= cfg.bootcamp.sessionMinutes %> minutes each day, limited to <%= cfg.bootcamp.capacity %> students. You get practice sets, a strategy playbook, a personal study plan and access to the student area.</p>
+        <div class="guarantee" style="background:rgba(255,255,255,0.08);border-color:rgba(255,255,255,0.18)">
+          <span class="mark" aria-hidden="true">&#10003;</span>
+          <p style="color:#eef2ff"><strong style="color:#8fe3bb">Full refund</strong> if you ask before the end of Saturday's session. See the <a href="/refund-policy" style="color:#cfe0ff">Refund Policy</a>.</p>
+        </div>
         <a class="btn btn-accent" href="/enroll">See bootcamp details</a>
       </div>
       <div class="center">
@@ -156,6 +208,8 @@
     <details><summary>Will you contact me?</summary><p>You will get an email confirmation and reminders. We only call or text if you check the optional box on the form, and you can stop at any time by replying STOP or emailing us.</p></details>
     <details><summary>What happens to my information?</summary><p>We use it to run the class and follow up about it. We do not sell it. Read the full <a href="/privacy">Privacy Policy</a>.</p></details>
     <details><summary>Will my score go up?</summary><p>We cannot promise a particular score, and no honest tutor can. The class gives you strategies and a practice plan; results depend on the work a student puts in.</p></details>
+    <details><summary>How is this different from a big self-paced course or app?</summary><p>Those are usually pre-recorded videos you watch alone. This is a live class with a real tutor, capped at <%= cfg.bootcamp.capacity %> students for the bootcamp, so your questions get answered as they come up and your practice plan is based on your own mistakes, not a generic lesson order.</p></details>
+    <details><summary>What if I am not happy with the bootcamp?</summary><p>You can get a full refund if you ask before the end of Saturday's session. See the <a href="/refund-policy">Refund Policy</a> for details.</p></details>
   </div>
 </section>
 
